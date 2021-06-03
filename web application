@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using WebApplication11.Models;
+
+namespace WebApplication11.Controllers
+{
+    public class DRIVERID1Controller : Controller
+    {
+        private Entities db = new Entities();
+
+        // GET: DRIVERID1
+        public ActionResult Index()
+        {
+            return View(db.DRIVERID1.ToList());
+        }
+
+        // GET: DRIVERID1/Details/5
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DRIVERID1 dRIVERID1 = db.DRIVERID1.Find(id);
+            if (dRIVERID1 == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dRIVERID1);
+        }
+
+        // GET: DRIVERID1/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: DRIVERID1/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "DRIVER_INFO,NAME,GENDER,DATE_OF_BIRTH,AADHAR_NO,PHONE_NO,PLACE,VEHICLE_NO,YEARS_OF_SERVICE")] DRIVERID1 dRIVERID1)
+        {
+            if (ModelState.IsValid)
+            {
+                db.DRIVERID1.Add(dRIVERID1);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(dRIVERID1);
+        }
+
+        // GET: DRIVERID1/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DRIVERID1 dRIVERID1 = db.DRIVERID1.Find(id);
+            if (dRIVERID1 == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dRIVERID1);
+        }
+
+        // POST: DRIVERID1/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "DRIVER_INFO,NAME,GENDER,DATE_OF_BIRTH,AADHAR_NO,PHONE_NO,PLACE,VEHICLE_NO,YEARS_OF_SERVICE")] DRIVERID1 dRIVERID1)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(dRIVERID1).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(dRIVERID1);
+        }
+
+        // GET: DRIVERID1/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DRIVERID1 dRIVERID1 = db.DRIVERID1.Find(id);
+            if (dRIVERID1 == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dRIVERID1);
+        }
+
+        // POST: DRIVERID1/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            DRIVERID1 dRIVERID1 = db.DRIVERID1.Find(id);
+            db.DRIVERID1.Remove(dRIVERID1);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}
